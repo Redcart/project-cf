@@ -33,4 +33,5 @@ jobs:
         --runtime=python39 \
         --source=cloud_function \
         --trigger-http \
-        --entry-point=hello
+        --entry-point=hello \
+        --allow-unauthenticated

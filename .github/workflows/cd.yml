@@ -35,4 +35,5 @@ jobs:
         --trigger-http \
         --entry-point=hello \
         --allow-unauthenticated \
+        --log-http \
         --run-service-account=gh-cicd-project@gold-circlet-433614-k2.iam.gserviceaccount.com

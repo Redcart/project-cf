@@ -34,4 +34,5 @@ jobs:
         --source=cloud_function \
         --trigger-http \
         --entry-point=hello \
-        --allow-unauthenticated
+        --allow-unauthenticated \
+        --run-service-account=gh-cicd-project@gold-circlet-433614-k2.iam.gserviceaccount.com

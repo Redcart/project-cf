@@ -37,4 +37,4 @@ jobs:
         --allow-unauthenticated \
         --log-http \
         --run-service-account=gh-cicd-project@gold-circlet-433614-k2.iam.gserviceaccount.com \
-        --build-service-account=gh-cicd-project@gold-circlet-433614-k2.iam.gserviceaccount.com
+        --build-service-account=projects/gold-circlet-433614-k2/serviceAccounts/gh-cicd-project@gold-circlet-433614-k2.iam.gserviceaccount.com

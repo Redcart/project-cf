@@ -31,6 +31,7 @@ jobs:
         --gen2 \
         --region=europe-west6 \
         --runtime=python310 \
+        --memory=1G \
         --source=cloud_function \
         --trigger-http \
         --entry-point=extract_transform_load \

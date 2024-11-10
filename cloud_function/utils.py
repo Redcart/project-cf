@@ -117,10 +117,11 @@ def ingest_data(input_path, bucket_name, project_id, dataset, table, mode):
                 "network_id": str,
                 "network_name": str,
                 "is_virtual_station": bool,
-                "capacity": float
+                "capacity": int
                 }
             )
-
+        
+        print(f"les types des colonnes apres load sont {df_transformed.info()}")
         job_config = bigquery.LoadJobConfig(
         # Specify a (partial) schema. All columns are always written to the
         # table. The schema is used to assist in data type definitions.

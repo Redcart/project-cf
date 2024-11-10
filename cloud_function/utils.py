@@ -61,8 +61,8 @@ def transform_data(input_path, bucket_name, output_path, mode):
         logging.info(df_all_stations.head())
         logging.info(df_all_stations.info())
 
-        df_all_stations.to_csv(path_or_buf=f"gs://{output_path}", index=False)
-        logging.info(f"Transformed data written at gs://{output_path}")
+        df_all_stations.to_csv(path_or_buf=f"gs://{bucket_name}/{output_path}", index=False)
+        logging.info(f"Transformed data written at gs://{bucket_name}/{output_path}")
 
     elif mode == "capacity":
         
@@ -88,15 +88,15 @@ def transform_data(input_path, bucket_name, output_path, mode):
         df_all_bikes = pd.DataFrame.from_records(data=list_of_stations_with_capacity)
         logging.info(df_all_bikes.head())
         logging.info(df_all_bikes.info())
-        df_all_bikes.to_csv(path_or_buf=f"gs://{output_path}", index=False)
-        logging.info(f"Transformed data written at gs://{output_path}")
+        df_all_bikes.to_csv(path_or_buf=f"gs://{bucket_name}/{output_path}", index=False)
+        logging.info(f"Transformed data written at gs://{bucket_name}/{output_path}")
     
     return "200"
 
 
-def ingest_data(input_path, project_id, dataset, table, mode):
+def ingest_data(input_path, bucket_name, project_id, dataset, table, mode):
 
-    df_transformed = pd.read_csv(filepath_or_buffer=f"gs://{input_path}")
+    df_transformed = pd.read_csv(filepath_or_buffer=f"gs://{bucket_name}/{input_path}")
     # Construct a BigQuery client object.
     client = bigquery.Client(project=project_id)
     table_id = f"{project_id}.{dataset}.{table}"

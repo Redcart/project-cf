@@ -34,4 +34,13 @@ def extract_transform_load(request):
         mode="stations"
     )
 
+    ingest_data(
+        input_path="transformed_data_bikes.csv", 
+        bucket_name=BUCKET_NAME,
+        project_id=PROJECT_ID,
+        dataset="publibikes-dev", 
+        table="capacity", 
+        mode="capacity"
+    )
+
     return "200"

@@ -101,6 +101,7 @@ def ingest_data(input_path, bucket_name, project_id, dataset, table, mode):
     table_id = f"{project_id}.{dataset}.{table}"
 
     if mode == "stations":
+        
         df_transformed = pd.read_csv(
             filepath_or_buffer=f"gs://{bucket_name}/{input_path}",
             dtype={

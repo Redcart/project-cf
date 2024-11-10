@@ -16,7 +16,10 @@ def get_data(url, bucket_name, output_path):
     storage_client = storage.Client()
     bucket = storage_client.bucket(bucket_name)
     blob = bucket.blob(blob_name=output_path)
-    blob.upload_from_string(publibike_data.text)
+
+    with blob.open(mode="w") as file:
+        file.write(publibike_data.text)
+
 
     logging.info(f"Data written at: {output_path}")
 

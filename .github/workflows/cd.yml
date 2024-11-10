@@ -27,7 +27,7 @@ jobs:
 
     - name: Deploy Cloud Function
       run: |
-        gcloud functions deploy my-first-cf \
+        gcloud functions deploy etl-pubibike-dev \
         --gen2 \
         --region=europe-west6 \
         --runtime=python310 \

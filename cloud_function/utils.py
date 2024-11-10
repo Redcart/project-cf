@@ -93,7 +93,7 @@ def transform_data(input_path, bucket_name, output_path, mode):
         logging.info(df_all_bikes.head())
         logging.info(df_all_bikes.info())
         df_all_bikes.to_csv(path_or_buf=f"gs://{output_path}", index=False)
-        logging.info(f"Transformed data written at f"gs://{output_path}"")
+        logging.info(f"Transformed data written at f"gs://{output_path}")
     
     return "200"
 

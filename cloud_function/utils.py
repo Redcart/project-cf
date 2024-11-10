@@ -3,6 +3,7 @@ import logging
 
 import requests
 import pandas as pd
+import numpy as np
 from google.cloud import storage, bigquery
 
 
@@ -106,8 +107,8 @@ def ingest_data(input_path, bucket_name, project_id, dataset, table, mode):
             filepath_or_buffer=f"gs://{bucket_name}/{input_path}",
             dtype={
                 "station_id": str,
-                "latitude": float,
-                "longitude": float,
+                "latitude": np.float64,
+                "longitude": np.float64,
                 "state_id": str,
                 "state_name": str,
                 "name": str,
@@ -117,7 +118,7 @@ def ingest_data(input_path, bucket_name, project_id, dataset, table, mode):
                 "network_id": str,
                 "network_name": str,
                 "is_virtual_station": bool,
-                "capacity": int
+                "capacity": np.int64,
                 }
             )
         
@@ -154,7 +155,7 @@ def ingest_data(input_path, bucket_name, project_id, dataset, table, mode):
                 "station_id": str,
                 "vehicule_id": str,
                 "vehicule_name": str,
-                "vehicule_ebike_battery_level": int,
+                "vehicule_ebike_battery_level": np.int64,
                 "vehicule_type_id": str,
                 "vehicule_type_name": str
                 }

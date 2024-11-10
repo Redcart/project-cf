@@ -112,7 +112,7 @@ def ingest_data(input_path, bucket_name, project_id, dataset, table, mode):
             # data type is ambiguous.
             bigquery.SchemaField("station_id", bigquery.enums.SqlTypeNames.STRING),
             # Indexes are written if included in the schema by name.
-            bigquery.SchemaField("latitiude", bigquery.enums.SqlTypeNames.STRING),
+            bigquery.SchemaField("latitude", bigquery.enums.SqlTypeNames.STRING),
             bigquery.SchemaField("longitude", bigquery.enums.SqlTypeNames.STRING),
             bigquery.SchemaField("state_id", bigquery.enums.SqlTypeNames.STRING),
             bigquery.SchemaField("state_name", bigquery.enums.SqlTypeNames.STRING),

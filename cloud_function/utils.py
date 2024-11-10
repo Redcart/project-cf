@@ -15,9 +15,9 @@ def get_data(url, bucket_name, output_path):
 
     storage_client = storage.Client()
     bucket = storage_client.bucket(bucket_name)
-    blob = bucket.blob(output_path)
+    blob = bucket.blob(blob_name=output_path)
 
-    with blob.open(file=output_path, mode="w") as file:
+    with blob.open(mode="w") as file:
         file.write(publibike_data.text)
 
     logging.info(f"Data written at: {output_path}")
@@ -28,9 +28,9 @@ def transform_data(input_path, bucket_name, output_path, mode):
 
     storage_client = storage.Client()
     bucket = storage_client.bucket(bucket_name)
-    blob = bucket.blob(input_path)
+    blob = bucket.blob(blob_name=input_path)
 
-    with blob.open(file=input_path, mode="r") as file:
+    with blob.open(mode="r") as file:
         raw_data = json.load(file)
 
     if mode == "stations":

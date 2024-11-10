@@ -30,11 +30,11 @@ jobs:
         gcloud functions deploy my-first-cf \
         --gen2 \
         --region=europe-west6 \
-        --runtime=python39 \
+        --runtime=python310 \
         --source=cloud_function \
         --trigger-http \
-        --entry-point=hello \
-        --allow-unauthenticated \
+        --entry-point=extract_transform_load \
+        --no-allow-unauthenticated \
         --log-http \
         --run-service-account=gh-cicd-project@gold-circlet-433614-k2.iam.gserviceaccount.com \
         --build-service-account=projects/gold-circlet-433614-k2/serviceAccounts/gh-cicd-project@gold-circlet-433614-k2.iam.gserviceaccount.com

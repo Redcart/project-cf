@@ -96,13 +96,29 @@ def transform_data(input_path, bucket_name, output_path, mode):
 
 def ingest_data(input_path, bucket_name, project_id, dataset, table, mode):
 
-    df_transformed = pd.read_csv(filepath_or_buffer=f"gs://{bucket_name}/{input_path}")
-    
     # Construct a BigQuery client object.
     client = bigquery.Client(project=project_id)
     table_id = f"{project_id}.{dataset}.{table}"
 
     if mode == "stations":
+        df_transformed = pd.read_csv(
+            filepath_or_buffer=f"gs://{bucket_name}/{input_path}",
+            dtype={
+                "station_id": str,
+                "latitude": str,
+                "longitude": str,
+                "state_id": str,
+                "state_name": str,
+                "name": str,
+                "address": str,
+                "zip": str,
+                "city": str,
+                "network_id": str,
+                "network_name": str,
+                "is_virtual_station": bool,
+                "capacity": int
+                }
+            )
 
         job_config = bigquery.LoadJobConfig(
         # Specify a (partial) schema. All columns are always written to the
@@ -111,10 +127,10 @@ def ingest_data(input_path, bucket_name, project_id, dataset, table, mode):
             # Specify the type of columns whose type cannot be auto-detected. For
             # example the "title" column uses pandas dtype "object", so its
             # data type is ambiguous.
-            bigquery.SchemaField("station_id", bigquery.enums.SqlTypeNames.INT64),
+            bigquery.SchemaField("station_id", bigquery.enums.SqlTypeNames.STRING),
             # Indexes are written if included in the schema by name.
-            bigquery.SchemaField("latitude", bigquery.enums.SqlTypeNames.NUMERIC),
-            bigquery.SchemaField("longitude", bigquery.enums.SqlTypeNames.NUMERIC),
+            bigquery.SchemaField("latitude", bigquery.enums.SqlTypeNames.STRING),
+            bigquery.SchemaField("longitude", bigquery.enums.SqlTypeNames.STRING),
             bigquery.SchemaField("state_id", bigquery.enums.SqlTypeNames.STRING),
             bigquery.SchemaField("state_name", bigquery.enums.SqlTypeNames.STRING),
             bigquery.SchemaField("name", bigquery.enums.SqlTypeNames.STRING),
@@ -124,12 +140,25 @@ def ingest_data(input_path, bucket_name, project_id, dataset, table, mode):
             bigquery.SchemaField("network_id", bigquery.enums.SqlTypeNames.STRING),
             bigquery.SchemaField("network_name", bigquery.enums.SqlTypeNames.STRING),
             bigquery.SchemaField("is_virtual_station", bigquery.enums.SqlTypeNames.BOOL),
-            bigquery.SchemaField("capacity", bigquery.enums.SqlTypeNames.STRING),
+            bigquery.SchemaField("capacity", bigquery.enums.SqlTypeNames.INT64),
         ],
         write_disposition="WRITE_APPEND",
         )
 
     elif mode == "capacity":
+
+        df_transformed = pd.read_csv(
+            filepath_or_buffer=f"gs://{bucket_name}/{input_path}",
+            dtype={
+                "station_id": str,
+                "vehicule_id": str,
+                "vehicule_name": str,
+                "vehicule_ebike_battery_level": int,
+                "vehicule_type_id": str,
+                "vehicule_type_name": str
+                }
+            )
+
         job_config = bigquery.LoadJobConfig(
         # Specify a (partial) schema. All columns are always written to the
         # table. The schema is used to assist in data type definitions.
@@ -137,12 +166,12 @@ def ingest_data(input_path, bucket_name, project_id, dataset, table, mode):
             # Specify the type of columns whose type cannot be auto-detected. For
             # example the "title" column uses pandas dtype "object", so its
             # data type is ambiguous.
-            bigquery.SchemaField("station_id", bigquery.enums.SqlTypeNames.INT64),
+            bigquery.SchemaField("station_id", bigquery.enums.SqlTypeNames.STRING),
             # Indexes are written if included in the schema by name.
-            bigquery.SchemaField("vehicle_id", bigquery.enums.SqlTypeNames.INT64),
+            bigquery.SchemaField("vehicle_id", bigquery.enums.SqlTypeNames.STRING),
             bigquery.SchemaField("vehicle_name", bigquery.enums.SqlTypeNames.STRING),
             bigquery.SchemaField("vehicle_ebike_battery_level", bigquery.enums.SqlTypeNames.INT64),
-            bigquery.SchemaField("vehicle_type_id", bigquery.enums.SqlTypeNames.INT64),
+            bigquery.SchemaField("vehicle_type_id", bigquery.enums.SqlTypeNames.STRING),
             bigquery.SchemaField("vehicle_type_name", bigquery.enums.SqlTypeNames.STRING),
         ],
         write_disposition="WRITE_APPEND",

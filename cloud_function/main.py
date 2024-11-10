@@ -29,7 +29,7 @@ def extract_transform_load(request):
         input_path="transformed_data_stations.csv", 
         bucket_name=BUCKET_NAME,
         project_id=PROJECT_ID,
-        dataset="publibike-dev", 
+        dataset="publibike_dev", 
         table="stations", 
         mode="stations"
     )
@@ -38,7 +38,7 @@ def extract_transform_load(request):
         input_path="transformed_data_bikes.csv", 
         bucket_name=BUCKET_NAME,
         project_id=PROJECT_ID,
-        dataset="publibike-dev", 
+        dataset="publibike_dev", 
         table="capacity", 
         mode="capacity"
     )

@@ -1,6 +1,6 @@
 from utils import get_data, transform_data, ingest_data
 URL = "https://api.publibike.ch/v1/public/partner/stations"
-BUCKET_NAME = "publibike-dev"
+BUCKET_NAME = "ind-publibike-dev"
 PROJECT_ID = "gold-circlet-433614-k2"
 
 def extract_transform_load(request):

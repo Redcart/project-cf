@@ -3,7 +3,6 @@ import logging
 
 import requests
 import pandas as pd
-import numpy as np
 from google.cloud import storage, bigquery
 
 
@@ -78,11 +77,11 @@ def transform_data(input_path, bucket_name, output_path, mode):
                 raw_data_one_bike = raw_data_one_station.get("vehicles")[bike]
                 data_one_bike = dict()
                 data_one_bike["station_id"] = raw_data_one_station.get("id")
-                data_one_bike["vehicule_id"] = raw_data_one_bike.get("id")
-                data_one_bike["vehicule_name"] = raw_data_one_bike.get("name")
-                data_one_bike["vehicule_ebike_battery_level"] = raw_data_one_bike.get("ebike_battery_level")
-                data_one_bike["vehicule_type_id"] = raw_data_one_bike.get("type").get("id")
-                data_one_bike["vehicule_type_name"] = raw_data_one_bike.get("type").get("name")
+                data_one_bike["vehicle_id"] = raw_data_one_bike.get("id")
+                data_one_bike["vehicle_name"] = raw_data_one_bike.get("name")
+                data_one_bike["vehicle_ebike_battery_level"] = raw_data_one_bike.get("ebike_battery_level")
+                data_one_bike["vehicle_type_id"] = raw_data_one_bike.get("type").get("id")
+                data_one_bike["vehicle_type_name"] = raw_data_one_bike.get("type").get("name")
 
                 list_of_stations_with_capacity.append(data_one_bike)
 
@@ -153,11 +152,11 @@ def ingest_data(input_path, bucket_name, project_id, dataset, table, mode):
             filepath_or_buffer=f"gs://{bucket_name}/{input_path}",
             dtype={
                 "station_id": str,
-                "vehicule_id": str,
-                "vehicule_name": str,
-                "vehicule_ebike_battery_level": float,
-                "vehicule_type_id": str,
-                "vehicule_type_name": str
+                "vehicle_id": str,
+                "vehicle_name": str,
+                "vehicle_ebike_battery_level": float,
+                "vehicle_type_id": str,
+                "vehicle_type_name": str
                 }
             )
 

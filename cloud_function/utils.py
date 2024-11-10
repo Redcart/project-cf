@@ -106,8 +106,8 @@ def ingest_data(input_path, bucket_name, project_id, dataset, table, mode):
             filepath_or_buffer=f"gs://{bucket_name}/{input_path}",
             dtype={
                 "station_id": str,
-                "latitude": str,
-                "longitude": str,
+                "latitude": float,
+                "longitude": float,
                 "state_id": str,
                 "state_name": str,
                 "name": str,
@@ -130,7 +130,6 @@ def ingest_data(input_path, bucket_name, project_id, dataset, table, mode):
             # example the "title" column uses pandas dtype "object", so its
             # data type is ambiguous.
             bigquery.SchemaField("station_id", bigquery.enums.SqlTypeNames.STRING),
-            # Indexes are written if included in the schema by name.
             bigquery.SchemaField("latitude", bigquery.enums.SqlTypeNames.STRING),
             bigquery.SchemaField("longitude", bigquery.enums.SqlTypeNames.STRING),
             bigquery.SchemaField("state_id", bigquery.enums.SqlTypeNames.STRING),

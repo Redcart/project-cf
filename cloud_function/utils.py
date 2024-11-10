@@ -107,8 +107,8 @@ def ingest_data(input_path, bucket_name, project_id, dataset, table, mode):
             filepath_or_buffer=f"gs://{bucket_name}/{input_path}",
             dtype={
                 "station_id": str,
-                "latitude": np.float64,
-                "longitude": np.float64,
+                "latitude": float,
+                "longitude": float,
                 "state_id": str,
                 "state_name": str,
                 "name": str,
@@ -118,7 +118,7 @@ def ingest_data(input_path, bucket_name, project_id, dataset, table, mode):
                 "network_id": str,
                 "network_name": str,
                 "is_virtual_station": bool,
-                "capacity": np.int64,
+                "capacity": int,
                 }
             )
         
@@ -155,7 +155,7 @@ def ingest_data(input_path, bucket_name, project_id, dataset, table, mode):
                 "station_id": str,
                 "vehicule_id": str,
                 "vehicule_name": str,
-                "vehicule_ebike_battery_level": np.int64,
+                "vehicule_ebike_battery_level": float,
                 "vehicule_type_id": str,
                 "vehicule_type_name": str
                 }
@@ -172,7 +172,7 @@ def ingest_data(input_path, bucket_name, project_id, dataset, table, mode):
             # Indexes are written if included in the schema by name.
             bigquery.SchemaField("vehicle_id", bigquery.enums.SqlTypeNames.STRING),
             bigquery.SchemaField("vehicle_name", bigquery.enums.SqlTypeNames.STRING),
-            bigquery.SchemaField("vehicle_ebike_battery_level", bigquery.enums.SqlTypeNames.INT64),
+            bigquery.SchemaField("vehicle_ebike_battery_level", bigquery.enums.SqlTypeNames.FLOAT64),
             bigquery.SchemaField("vehicle_type_id", bigquery.enums.SqlTypeNames.STRING),
             bigquery.SchemaField("vehicle_type_name", bigquery.enums.SqlTypeNames.STRING),
         ],

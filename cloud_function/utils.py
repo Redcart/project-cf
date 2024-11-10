@@ -8,7 +8,6 @@ from google.cloud import storage, bigquery
 
 def get_data(url, bucket_name, output_path):
 
-
     publibike_data = requests.get(url=url)
     logging.info(f"The data received from the API is: {publibike_data.text}")
     logging.info(f"The status code received from the API is: {publibike_data.status_code}")
@@ -57,7 +56,6 @@ def transform_data(input_path, bucket_name, output_path, mode):
 
             list_of_stations.append(data_one_station)
 
-
         df_all_stations = pd.DataFrame.from_records(data=list_of_stations)
 
         logging.info(df_all_stations.head())
@@ -94,7 +92,6 @@ def transform_data(input_path, bucket_name, output_path, mode):
         logging.info(f"Transformed data written at gs://{output_path}")
     
     return "200"
-
 
 
 def ingest_data(input_path, project_id, dataset, table, mode):

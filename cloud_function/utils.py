@@ -121,7 +121,8 @@ def ingest_data(input_path, bucket_name, project_id, dataset, table, mode):
                 "capacity": int,
                 "ingestion_time": str
                 },
-                parse_dates=["ingestion_time"]
+            parse_dates=["ingestion_time"],
+            date_format={"ingestion_time": "%Y-%m-%d %H:%M:%S"}
             )
         
         print(f"les types des colonnes apres load sont {df_transformed.info()}")
@@ -163,7 +164,8 @@ def ingest_data(input_path, bucket_name, project_id, dataset, table, mode):
                 "vehicle_type_name": str,
                 "ingestion_time": str
                 },
-            parse_dates=["ingestion_time"]
+            parse_dates=["ingestion_time"],
+            date_format={"ingestion_time": "%Y-%m-%d %H:%M:%S"}
 
             )
 

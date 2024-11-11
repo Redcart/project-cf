@@ -10,7 +10,7 @@ PROJECT_ID = "gold-circlet-433614-k2"
 
 def extract_transform_load(request):
 
-    print(request)
+    print(request.data)
     print(dir(request))
 
     now = datetime.now(pytz.timezone('Europe/Paris'))

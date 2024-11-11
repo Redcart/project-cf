@@ -149,7 +149,7 @@ def ingest_data(input_path, bucket_name, project_id, dataset, table, mode):
             bigquery.SchemaField("network_name", bigquery.enums.SqlTypeNames.STRING),
             bigquery.SchemaField("is_virtual_station", bigquery.enums.SqlTypeNames.BOOL),
             bigquery.SchemaField("capacity", bigquery.enums.SqlTypeNames.INT64),
-            bigquery.SchemaField("ingestion_time", bigquery.enums.SqlTypeNames.DATE)
+            bigquery.SchemaField("ingestion_time", bigquery.enums.SqlTypeNames.DATETIME)
         ],
         write_disposition="WRITE_APPEND",
         )
@@ -188,7 +188,7 @@ def ingest_data(input_path, bucket_name, project_id, dataset, table, mode):
             bigquery.SchemaField("vehicle_ebike_battery_level", bigquery.enums.SqlTypeNames.FLOAT64),
             bigquery.SchemaField("vehicle_type_id", bigquery.enums.SqlTypeNames.STRING),
             bigquery.SchemaField("vehicle_type_name", bigquery.enums.SqlTypeNames.STRING),
-            bigquery.SchemaField("ingestion_time", bigquery.enums.SqlTypeNames.DATE)
+            bigquery.SchemaField("ingestion_time", bigquery.enums.SqlTypeNames.DATETIME)
         ],
         write_disposition="WRITE_APPEND",
         )

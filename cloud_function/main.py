@@ -11,6 +11,9 @@ PROJECT_ID = "gold-circlet-433614-k2"
 
 def extract_transform_load(request):
 
+    print(request)
+    print(request.body)
+    
     now = datetime.now(pytz.timezone('Europe/Paris'))
     current_full_date = now.strftime("%Y-%m-%d %H:%M:00")
     current_ymd = now.strftime("%Y-%m-%d")

@@ -125,6 +125,8 @@ def ingest_data(input_path, bucket_name, project_id, dataset, table, mode):
             date_format={"ingestion_time": "%Y-%m-%d %H:%M:%S"}
             )
         
+        df_transformed["ingestion_time"] = pd.to_datetime(df_transformed["ingestion_time"])
+        
         print(f"les types des colonnes apres load sont {df_transformed.info()}")
         job_config = bigquery.LoadJobConfig(
         # Specify a (partial) schema. All columns are always written to the
@@ -169,6 +171,7 @@ def ingest_data(input_path, bucket_name, project_id, dataset, table, mode):
 
             )
 
+        df_transformed["ingestion_time"] = pd.to_datetime(df_transformed["ingestion_time"])
         job_config = bigquery.LoadJobConfig(
         # Specify a (partial) schema. All columns are always written to the
         # table. The schema is used to assist in data type definitions.

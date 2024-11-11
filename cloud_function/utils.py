@@ -21,7 +21,7 @@ def get_data(url, bucket_name, output_path):
 
     return "200"
 
-def transform_data(input_path, bucket_name, output_path, mode):
+def transform_data(input_path, bucket_name, output_path, mode, date_time):
 
     storage_client = storage.Client()
     bucket = storage_client.bucket(bucket_name)
@@ -53,7 +53,7 @@ def transform_data(input_path, bucket_name, output_path, mode):
             data_one_station["network_name"] = raw_data_one_station.get("network").get("name")
             data_one_station["is_virtual_station"] = raw_data_one_station.get("is_virtual_station")
             data_one_station["capacity"] = raw_data_one_station.get("capacity")
-
+            data_one_station["ingestion_time"] = date_time
             list_of_stations.append(data_one_station)
 
         df_all_stations = pd.DataFrame.from_records(data=list_of_stations)
@@ -82,6 +82,7 @@ def transform_data(input_path, bucket_name, output_path, mode):
                 data_one_bike["vehicle_ebike_battery_level"] = raw_data_one_bike.get("ebike_battery_level")
                 data_one_bike["vehicle_type_id"] = raw_data_one_bike.get("type").get("id")
                 data_one_bike["vehicle_type_name"] = raw_data_one_bike.get("type").get("name")
+                data_one_bike["ingestion_time"] = date_time
 
                 list_of_stations_with_capacity.append(data_one_bike)
 
@@ -118,6 +119,7 @@ def ingest_data(input_path, bucket_name, project_id, dataset, table, mode):
                 "network_name": str,
                 "is_virtual_station": bool,
                 "capacity": int,
+                "ingestion_time": str
                 }
             )
         
@@ -142,6 +144,7 @@ def ingest_data(input_path, bucket_name, project_id, dataset, table, mode):
             bigquery.SchemaField("network_name", bigquery.enums.SqlTypeNames.STRING),
             bigquery.SchemaField("is_virtual_station", bigquery.enums.SqlTypeNames.BOOL),
             bigquery.SchemaField("capacity", bigquery.enums.SqlTypeNames.INT64),
+            bigquery.SchemaField("ingestion_time", bigquery.enums.SqlTypeNames.DATE)
         ],
         write_disposition="WRITE_APPEND",
         )
@@ -156,7 +159,8 @@ def ingest_data(input_path, bucket_name, project_id, dataset, table, mode):
                 "vehicle_name": str,
                 "vehicle_ebike_battery_level": float,
                 "vehicle_type_id": str,
-                "vehicle_type_name": str
+                "vehicle_type_name": str,
+                "ingestion_time": str
                 }
             )
 
@@ -174,6 +178,7 @@ def ingest_data(input_path, bucket_name, project_id, dataset, table, mode):
             bigquery.SchemaField("vehicle_ebike_battery_level", bigquery.enums.SqlTypeNames.FLOAT64),
             bigquery.SchemaField("vehicle_type_id", bigquery.enums.SqlTypeNames.STRING),
             bigquery.SchemaField("vehicle_type_name", bigquery.enums.SqlTypeNames.STRING),
+            bigquery.SchemaField("ingestion_time", bigquery.enums.SqlTypeNames.DATE)
         ],
         write_disposition="WRITE_APPEND",
         )

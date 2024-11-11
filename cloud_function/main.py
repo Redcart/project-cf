@@ -25,7 +25,7 @@ def extract_transform_load(request):
         output_path=f"raw_data/{current_ymd}/{current_hour}/data.json"
     )
 
-    if mode == "stations":
+    if True: #mode == "stations":
 
         transform_data(
             input_path=f"raw_data/{current_ymd}/{current_hour}/data.json",

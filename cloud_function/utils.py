@@ -120,7 +120,8 @@ def ingest_data(input_path, bucket_name, project_id, dataset, table, mode):
                 "is_virtual_station": bool,
                 "capacity": int,
                 "ingestion_time": str
-                }
+                },
+                parse_dates="ingestion_time"
             )
         
         print(f"les types des colonnes apres load sont {df_transformed.info()}")

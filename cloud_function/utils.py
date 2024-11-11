@@ -120,13 +120,14 @@ def ingest_data(input_path, bucket_name, project_id, dataset, table, mode):
                 "is_virtual_station": bool,
                 "capacity": int,
                 "ingestion_time": str
-                },
-            parse_dates=["ingestion_time"],
-            date_format={"ingestion_time": "%Y-%m-%d %H:%M:%S"}
+                }
             )
         
-        df_transformed["ingestion_time"] = pd.to_datetime(df_transformed["ingestion_time"])
-        
+        df_transformed["ingestion_time"] = pd.to_datetime(
+            df_transformed["ingestion_time"], 
+            format="%Y-%m-%d %H:%M:%S"
+        )
+
         print(f"les types des colonnes apres load sont {df_transformed.info()}")
         job_config = bigquery.LoadJobConfig(
         # Specify a (partial) schema. All columns are always written to the
@@ -165,13 +166,14 @@ def ingest_data(input_path, bucket_name, project_id, dataset, table, mode):
                 "vehicle_type_id": str,
                 "vehicle_type_name": str,
                 "ingestion_time": str
-                },
-            parse_dates=["ingestion_time"],
-            date_format={"ingestion_time": "%Y-%m-%d %H:%M:%S"}
-
+                }
             )
 
-        df_transformed["ingestion_time"] = pd.to_datetime(df_transformed["ingestion_time"])
+        df_transformed["ingestion_time"] = pd.to_datetime(
+            df_transformed["ingestion_time"], 
+            format="%Y-%m-%d %H:%M:%S"
+        )
+
         job_config = bigquery.LoadJobConfig(
         # Specify a (partial) schema. All columns are always written to the
         # table. The schema is used to assist in data type definitions.

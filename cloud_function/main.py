@@ -1,4 +1,5 @@
 from datetime import datetime
+import json
 
 import pytz
 
@@ -10,8 +11,8 @@ PROJECT_ID = "gold-circlet-433614-k2"
 
 def extract_transform_load(request):
 
-    print(request.data)
-    print(dir(request))
+    mode = json.loads(request.data.decode()).get("mode")
+    print(mode)
 
     now = datetime.now(pytz.timezone('Europe/Paris'))
     current_full_date = now.strftime("%Y-%m-%d %H:%M:00")
@@ -25,7 +26,7 @@ def extract_transform_load(request):
         output_path=f"raw_data/{current_ymd}/{current_hour}/data.json"
     )
 
-    if True: #mode == "stations":
+    if mode == "stations":
 
         transform_data(
             input_path=f"raw_data/{current_ymd}/{current_hour}/data.json",

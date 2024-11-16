@@ -14,7 +14,7 @@ def extract_transform_load(request):
     mode = json.loads(request.data.decode()).get("mode")
     print(mode)
 
-    now = datetime.now(pytz.timezone('Europe/Paris'))
+    now = datetime.now(pytz.timezone('UTC'))
     current_full_date = now.strftime("%Y-%m-%d %H:%M:00")
     current_ymd = now.strftime("%Y-%m-%d")
     current_hour = now.strftime("%H:00:00")

@@ -1,12 +1,15 @@
-name: 'Test'
+name: 'ETL - SQL'
 
 on:
     push:
         branches:
             - "main"
             - "prd"
+            - "uat"
+            - "dev"
+
 jobs:
-  job_id:
+  etl:
     runs-on: ubuntu-latest
     # Add "id-token" with the intended permissions.
     permissions:
@@ -32,9 +35,44 @@ jobs:
         --region=europe-west6 \
         --runtime=python310 \
         --memory=1G \
-        --source=cloud_function \
+        --source=cloud_function_etl \
         --trigger-http \
         --entry-point=extract_transform_load \
+        --no-allow-unauthenticated \
+        --ingress-settings=internal-only \
+        --log-http \
+        --run-service-account=project@gold-circlet-433614-k2.iam.gserviceaccount.com \
+        --build-service-account=projects/gold-circlet-433614-k2/serviceAccounts/gh-cicd-project@gold-circlet-433614-k2.iam.gserviceaccount.com
+
+  sql:
+    runs-on: ubuntu-latest
+    # Add "id-token" with the intended permissions.
+    permissions:
+    contents: 'read'
+    id-token: 'write'
+
+    steps:
+    - name: Checkout code repository
+      uses: 'actions/checkout@v4'
+
+    - name: Authentication to Google Cloud Platform
+      uses: 'google-github-actions/auth@v2'
+      with:
+        token_format: access_token
+        workload_identity_provider: 'projects/551258122985/locations/global/workloadIdentityPools/github/providers/github-provider'
+        service_account: gh-cicd-project@gold-circlet-433614-k2.iam.gserviceaccount.com
+        access_token_lifetime: 300s
+
+    - name: Deploy Cloud Function
+      run: |
+        gcloud functions deploy sql-pubibike-dev \
+        --gen2 \
+        --region=europe-west6 \
+        --runtime=python310 \
+        --memory=1G \
+        --source=cloud_function_sql \
+        --trigger-http \
+        --entry-point=process \
         --no-allow-unauthenticated \
         --ingress-settings=internal-only \
         --log-http \

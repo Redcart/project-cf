@@ -1,8 +1,3 @@
-from datetime import datetime
-import json
-
-import pytz
-
 from utils import run_query
 
 URL = "https://api.publibike.ch/v1/public/partner/stations"

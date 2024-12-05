@@ -20,6 +20,7 @@ env:
 
 jobs:
   etl:
+    environment: dev
     runs-on: ubuntu-latest
     # Add "id-token" with the intended permissions.
     permissions:

@@ -89,7 +89,6 @@ jobs:
         --run-service-account=${{ env.SERVICE_ACCOUNT_RUNTIME }} \
         --build-service-account=projects/${{ env.PROJECT_ID }}/serviceAccounts/${{ env.SERVICE_ACCOUNT_GH }}
 
-
   airflow:
       runs-on: ubuntu-latest
       # Add "id-token" with the intended permissions.

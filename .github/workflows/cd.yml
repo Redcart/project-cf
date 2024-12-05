@@ -1,4 +1,4 @@
-name: 'ETL - SQL'
+name: 'ETL - SQL - DAGs'
 
 on:
     push:

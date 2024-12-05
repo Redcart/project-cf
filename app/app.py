@@ -13,7 +13,7 @@ sql_query = f"""
 
 df_stations_capacity_aggregated = bigquery_client.query(sql_query).to_dataframe()
 
-df_filtered = df_stations_capacity_aggregated.loc[df_stations_capacity_aggregated["station_id"] == "99", ]
+df_filtered = df_stations_capacity_aggregated.loc[df_stations_capacity_aggregated["station_id"] == "10", ]
 
 st.dataframe(df_filtered )
 

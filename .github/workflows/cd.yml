@@ -8,6 +8,16 @@ on:
             - "uat"
             - "dev"
 
+env:
+  ENV: ${{ vars.ENV }}
+  PROJECT_ID: ${{ vars.PROJECT_ID }}
+  PROJECT_NUMBER: ${{ vars.PROJECT_NUMBER }}
+  REGION: ${{ vars.REGION}}
+  SERVICE_ACCOUNT_RUNTIME: ${{ vars.SERVICE_ACCOUNT_RUNTIME }}
+  SERVICE_ACCOUNT_GH: ${{ vars.SERVICE_ACCOUNT_GH }}
+  POOL_PROVIDER: ${{ vars.POOL_PROVIDER }} # github-provider
+  INITIATIVE: ${{ vars.INITIATIVE }}
+
 jobs:
   etl:
     runs-on: ubuntu-latest
@@ -24,15 +34,15 @@ jobs:
       uses: 'google-github-actions/auth@v2'
       with:
         token_format: access_token
-        workload_identity_provider: 'projects/551258122985/locations/global/workloadIdentityPools/github/providers/github-provider'
-        service_account: gh-cicd-project@gold-circlet-433614-k2.iam.gserviceaccount.com
+        workload_identity_provider: 'projects/${{ env.PROJECT_NUMBER }}/locations/global/workloadIdentityPools/github/providers/${{ env.POOL_PROVIDER }}'
+        service_account: ${{ env.SERVICE_ACCOUNT_GH }}
         access_token_lifetime: 300s
 
     - name: Deploy Cloud Function
       run: |
-        gcloud functions deploy etl-pubibike-dev \
+        gcloud functions deploy etl-${{ env.INITIATIVE }}-${{ env.ENV }} \
         --gen2 \
-        --region=europe-west6 \
+        --region=${{ env.REGION }} \
         --runtime=python310 \
         --memory=1G \
         --source=cloud_function_etl \
@@ -41,8 +51,8 @@ jobs:
         --no-allow-unauthenticated \
         --ingress-settings=internal-only \
         --log-http \
-        --run-service-account=project@gold-circlet-433614-k2.iam.gserviceaccount.com \
-        --build-service-account=projects/gold-circlet-433614-k2/serviceAccounts/gh-cicd-project@gold-circlet-433614-k2.iam.gserviceaccount.com
+        --run-service-account=${{ env.SERVICE_ACCOUNT_RUNTIME }} \
+        --build-service-account=projects/${{ env.PROJECT_ID }}/serviceAccounts/${{ env.SERVICE_ACCOUNT_GH }}
 
   sql:
     runs-on: ubuntu-latest
@@ -59,15 +69,15 @@ jobs:
       uses: 'google-github-actions/auth@v2'
       with:
         token_format: access_token
-        workload_identity_provider: 'projects/551258122985/locations/global/workloadIdentityPools/github/providers/github-provider'
-        service_account: gh-cicd-project@gold-circlet-433614-k2.iam.gserviceaccount.com
+        workload_identity_provider: 'projects/${{ env.PROJECT_NUMBER }}/locations/global/workloadIdentityPools/github/providers/${{ env.POOL_PROVIDER }}'
+        service_account: ${{ env.SERVICE_ACCOUNT_GH }}
         access_token_lifetime: 300s
 
     - name: Deploy Cloud Function
       run: |
-        gcloud functions deploy sql-pubibike-dev \
+        gcloud functions deploy sql-${{ env.INITIATIVE }}-${{ env.ENV }} \
         --gen2 \
-        --region=europe-west6 \
+        --region=${{ env.REGION }} \
         --runtime=python310 \
         --memory=1G \
         --source=cloud_function_sql \
@@ -76,5 +86,29 @@ jobs:
         --no-allow-unauthenticated \
         --ingress-settings=internal-only \
         --log-http \
-        --run-service-account=project@gold-circlet-433614-k2.iam.gserviceaccount.com \
-        --build-service-account=projects/gold-circlet-433614-k2/serviceAccounts/gh-cicd-project@gold-circlet-433614-k2.iam.gserviceaccount.com
+        --run-service-account=${{ env.SERVICE_ACCOUNT_RUNTIME }} \
+        --build-service-account=projects/${{ env.PROJECT_ID }}/serviceAccounts/${{ env.SERVICE_ACCOUNT_GH }}
+
+
+  airflow:
+      runs-on: ubuntu-latest
+      # Add "id-token" with the intended permissions.
+      permissions:
+        contents: 'read'
+        id-token: 'write'
+
+      steps:
+      - name: Checkout code repository
+        uses: 'actions/checkout@v4'
+
+      - name: Authentication to Google Cloud Platform
+        uses: 'google-github-actions/auth@v2'
+        with:
+          token_format: access_token
+          workload_identity_provider: 'projects/${{ env.PROJECT_NUMBER }}/locations/global/workloadIdentityPools/github/providers/${{ env.POOL_PROVIDER }}'
+          service_account: ${{ env.SERVICE_ACCOUNT_GH }}
+          access_token_lifetime: 300s
+
+      - name: Update Airflow Dags in Google Cloud Storage Bucket
+        run: |
+          gsutil rsync -r dags/ gs://europe-west6-composer-5ebfbd97-bucket/dags/

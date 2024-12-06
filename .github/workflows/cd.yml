@@ -9,7 +9,6 @@ on:
             - "dev"
 
 env:
-  ENV: ${{ vars.ENV }}
   PROJECT_ID: ${{ vars.PROJECT_ID }}
   PROJECT_NUMBER: ${{ vars.PROJECT_NUMBER }}
   REGION: ${{ vars.REGION}}
@@ -20,7 +19,7 @@ env:
 
 jobs:
   etl:
-    environment: dev
+    environment: ${{ github.ref_name }}
     runs-on: ubuntu-latest
     # Add "id-token" with the intended permissions.
     permissions:

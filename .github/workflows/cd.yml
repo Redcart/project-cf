@@ -19,7 +19,7 @@ env:
 
 jobs:
   etl:
-    environment: ${{ github.ref_name }}
+    environment: dev
     runs-on: ubuntu-latest
     # Add "id-token" with the intended permissions.
     permissions:
@@ -40,7 +40,7 @@ jobs:
 
     - name: Deploy Cloud Function
       run: |
-        gcloud functions deploy etl-${{ env.INITIATIVE }}-${{ env.ENV }} \
+        gcloud functions deploy etl-${{ env.INITIATIVE }} \
         --gen2 \
         --region=${{ env.REGION }} \
         --runtime=python310 \
@@ -55,6 +55,7 @@ jobs:
         --build-service-account=projects/${{ env.PROJECT_ID }}/serviceAccounts/${{ env.SERVICE_ACCOUNT_GH }}
 
   sql:
+    environment: dev
     runs-on: ubuntu-latest
     # Add "id-token" with the intended permissions.
     permissions:
@@ -75,7 +76,7 @@ jobs:
 
     - name: Deploy Cloud Function
       run: |
-        gcloud functions deploy sql-${{ env.INITIATIVE }}-${{ env.ENV }} \
+        gcloud functions deploy sql-${{ env.INITIATIVE }} \
         --gen2 \
         --region=${{ env.REGION }} \
         --runtime=python310 \
@@ -90,6 +91,7 @@ jobs:
         --build-service-account=projects/${{ env.PROJECT_ID }}/serviceAccounts/${{ env.SERVICE_ACCOUNT_GH }}
 
   airflow:
+      environment: dev
       runs-on: ubuntu-latest
       # Add "id-token" with the intended permissions.
       permissions:

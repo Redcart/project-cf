@@ -116,4 +116,4 @@ jobs:
 
       - name: Update Airflow Dags in Google Cloud Storage Bucket
         run: |
-          gsutil rsync -r ./dags/ gs://europe-west6-composer-5ebfbd97-bucket/dags/
+          gsutil rsync -r dags/ gs://europe-west6-composer-5ebfbd97-bucket/dags/

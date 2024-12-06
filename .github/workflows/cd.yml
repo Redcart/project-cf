@@ -110,6 +110,10 @@ jobs:
           service_account: ${{ env.SERVICE_ACCOUNT_GH }}
           access_token_lifetime: 300s
 
+      - name: Echo current WDIR
+        run: |
+          ls
+
       - name: Update Airflow Dags in Google Cloud Storage Bucket
         run: |
           gsutil rsync -r ./dags/ gs://europe-west6-composer-5ebfbd97-bucket/dags/

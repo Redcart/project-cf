@@ -8,7 +8,7 @@ from utils import extract_transform_load
 
 
 URL = "https://api.publibike.ch/v1/public/partner/stations"
-BUCKET_NAME = "ind-etl-publibike-dev"
+BUCKET_NAME = "proj-etl-publibike-dev"
 PROJECT_ID = "inspired-victor-442419-j3"
 
 default_args = {

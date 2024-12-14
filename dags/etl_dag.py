@@ -32,7 +32,7 @@ with DAG('etl_dag', schedule_interval='*/5 * * * *', default_args=default_args, 
         op_kwargs={
             "url": URL, 
             "bucket_name": BUCKET_NAME, 
-            "output!path": f"raw_data/{current_ymd}/{current_hour}/data.json"
+            "output_path": f"raw_data/{current_ymd}/{current_hour}/data.json"
         },
     )
 

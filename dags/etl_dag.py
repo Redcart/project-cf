@@ -17,7 +17,7 @@ default_args = {
     'retry_delay': timedelta(minutes=5)
 }
 
-with DAG('my_dag', schedule_interval='*/5 * * * *', default_args=default_args, catchup=False) as dag:
+with DAG('etl_dag', schedule_interval='*/5 * * * *', default_args=default_args, catchup=False) as dag:
 
     python_task = PythonOperator(
         task_id='etl_task',

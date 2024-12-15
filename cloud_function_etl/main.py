@@ -1,7 +1,6 @@
 from datetime import datetime
 import json
 import logging 
-
 import pytz
 
 from utils import get_data, transform_data, ingest_data

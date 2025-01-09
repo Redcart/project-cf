@@ -3,7 +3,7 @@ from utils import run_query
 URL = "https://api.publibike.ch/v1/public/partner/stations"
 BUCKET_NAME = "proj-etl-publibike-dev"
 PROJECT_ID = "inspired-victor-442419-j3"
-DATASET = "publibike_dev"
+DATASET = "publibike"
 TABLE = "stations_capacity_aggregated"
 
 def process(request):

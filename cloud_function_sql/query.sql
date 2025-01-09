@@ -4,7 +4,7 @@ list_stations AS (
 
   SELECT DISTINCT
     station_id
-  FROM `gold-circlet-433614-k2.publibike_dev.stations`
+  FROM `inspired-victor-442419-j3.publibike.stations`
 
 ),
 
@@ -39,7 +39,7 @@ available_mechanic_bikes AS (
     ingestion_time,
     vehicle_type_id,
     COUNT(*) AS nb_bikes_available_mechanic
-  FROM `gold-circlet-433614-k2.publibike_dev.capacity`
+  FROM `inspired-victor-442419-j3.publibike.capacity`
   WHERE vehicle_type_id = "1"
   GROUP BY station_id, vehicle_type_id, ingestion_time
   
@@ -52,7 +52,7 @@ available_electric_bikes AS (
     ingestion_time,
     vehicle_type_id,
     COUNT(*) AS nb_bikes_available_electric
-  FROM `gold-circlet-433614-k2.publibike_dev.capacity`
+  FROM `inspired-victor-442419-j3.publibike.capacity`
   WHERE vehicle_type_id = "2"
   GROUP BY station_id, vehicle_type_id, ingestion_time
   
